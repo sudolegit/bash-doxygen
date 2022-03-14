@@ -19,7 +19,7 @@
 ## Project Author: Damien Nadé <github@livna.org>
 ##
 
-/^## \+@fn/{
+/## \+@fn/{
     :step
     /@param [^ ]\+ .*$/{
         # Groups are
@@ -45,9 +45,10 @@
     # Remove the function body to avoid interference, and re-introduce
     # list of parameters in the funcname(<here>).
     s/\(@fn \([^(]\+\)(\)\([^)]*\)\().*\)\n\2() *{/\1\3\4\n\2(\3) { }/
-    # Replace all '## ' by '//! ' at beginning-of-line.
-    s/\(^\|\n\)##\n/\1\/\/!\n/g
-    s/\(^\|\n\)## /\1\/\/! /g
+    # Replace all '## ' by '//! ' at beginning-of-line (note:  accounts for leading white space).
+    s/##/\/\//g
+    s/\(\|\n\)\/\/\n/\1\/\/!\n/g
+    s/\(\|\n\)\/\/ /\1\/\/! /g
     p
     b end
 }
@@ -166,4 +167,6 @@ b declareprint
 
 :end
 # Make all ## lines doxygen-able.
-s/^\s*##\( \|$\)/\/\/!\1/p
+s/\s*##\( \|$\)/\/\/!\1/p
+
+

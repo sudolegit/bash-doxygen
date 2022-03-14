@@ -19,8 +19,12 @@
 ## Project Author: Damien Nadé <github@livna.org>
 ##
 
-/^## \+@fn/{
+/## \+@fn/{
     :step
+    # We need to prune excess white space before proceeding as sed commands that follow presume only 
+    # one space of separation between components
+    s/  \+/ /g
+    # Process "##...@param ..." commands:
     /@param [^ ]\+ .*$/{
         # Groups are
         # \1: @fn <funcname>
@@ -32,6 +36,45 @@
         # \7: everything after \5 to end of line
         # Here, we-reinsert param names into the <funcname>()
         s/\(@fn [^(\n]\+\)(\([^(]*\))\(.*\)\(@param \)\([^ \n]\+\(\.\.\.\)\?\)\([^\n]*\)$/\1(\2, \5)\3\4\5\7/
+    }
+    # Process "##...@param[in] ..." commands:
+    /@param\[in\] [^ ]\+ .*$/{
+        # Groups are
+        # \1: @fn <funcname>
+        # \2: already identified params
+        # \3: previous doc string
+        # \4: @param[in]<space>
+        # \5: newly identified param name plus optional dot-dot-dot string
+        # \6: optional dot-dot-dot string
+        # \7: everything after \5 to end of line
+        # Here, we-reinsert param names into the <funcname>()
+        s/\(@fn [^(\n]\+\)(\([^(]*\))\(.*\)\(@param\[in\] \)\([^ \n]\+\(\.\.\.\)\?\)\([^\n]*\)$/\1(\2, \5)\3\4\5\7/
+    }
+    # Process "##...@param[out] ..." commands:
+    /@param\[out\] [^ ]\+ .*$/{
+        # Groups are
+        # \1: @fn <funcname>
+        # \2: already identified params
+        # \3: previous doc string
+        # \4: @param[out]<space>
+        # \5: newly identified param name plus optional dot-dot-dot string
+        # \6: optional dot-dot-dot string
+        # \7: everything after \5 to end of line
+        # Here, we-reinsert param names into the <funcname>()
+        s/\(@fn [^(\n]\+\)(\([^(]*\))\(.*\)\(@param\[out\] \)\([^ \n]\+\(\.\.\.\)\?\)\([^\n]*\)$/\1(\2, \5)\3\4\5\7/
+    }
+    # Process "##...@param[in,out] ..." commands:
+    /@param\[in,out\] [^ ]\+ .*$/{
+        # Groups are
+        # \1: @fn <funcname>
+        # \2: already identified params
+        # \3: previous doc string
+        # \4: @param[in,out]<space>
+        # \5: newly identified param name plus optional dot-dot-dot string
+        # \6: optional dot-dot-dot string
+        # \7: everything after \5 to end of line
+        # Here, we-reinsert param names into the <funcname>()
+        s/\(@fn [^(\n]\+\)(\([^(]*\))\(.*\)\(@param\[in,out\] \)\([^ \n]\+\(\.\.\.\)\?\)\([^\n]*\)$/\1(\2, \5)\3\4\5\7/
     }
     / *\(function \+\)\?[a-z:.A-Z0-9_]\+ *() *{ *$/!{
         N
@@ -45,9 +88,10 @@
     # Remove the function body to avoid interference, and re-introduce
     # list of parameters in the funcname(<here>).
     s/\(@fn \([^(]\+\)(\)\([^)]*\)\().*\)\n\2() *{/\1\3\4\n\2(\3) { }/
-    # Replace all '## ' by '//! ' at beginning-of-line.
-    s/\(^\|\n\)##\n/\1\/\/!\n/g
-    s/\(^\|\n\)## /\1\/\/! /g
+    # Replace all '## ' by '//! ' at beginning-of-line (note:  accounts for leading white space).
+    s/##/\/\//g
+    s/\(\|\n\)\/\/\n/\1\/\/!\n/g
+    s/\(\|\n\)\/\/ /\1\/\/! /g
     p
     b end
 }
@@ -166,4 +210,6 @@ b declareprint
 
 :end
 # Make all ## lines doxygen-able.
-s/^\s*##\( \|$\)/\/\/!\1/p
+s/\s*##\( \|$\)/\/\/!\1/p
+
+

@@ -1,12 +1,17 @@
 
 
+//!  @file
+//!  
+//!  @brief          Bash Doxgen Unit Test
+//!  
+//!  @note           -*- tab-width: 4; encoding: utf-8 -*-
+//! 
+//!  @author         Damien Nadé <bash-argsparse@livna.org>
+//! 
+//!  @copyright      WTFPLv2
+//!  
+//!  @version        1
 
-//! @file
-//! @author Damien Nadé <bash-argsparse@livna.org>
-//! @brief Bash Doxgen Unit Test
-//! @copyright WTFPLv2
-//! @version 1
-//!
 
 ReadOnly String readonly;
 ReadOnly String assigned_readonly = readonly-value;
@@ -37,21 +42,61 @@ UpperCase String assigned_uppercase = U;
 Exported String exported;
 Exported String assigned_exported = 1;
 
+
 //! @fn function_1(param1)
 //! @brief 1st function
 //! @param param1 first parameter
 //!
 //! Don't skip empty line above
+////////////////////////////////////////////////////////////////////////////////////////////////////!
 function_1(param1) { }
 
 
 
 
-//! @fn function_2(param1, param2)
+
+//! @fn function_2a(param1, param2, param3)
 //! @brief 2nd function
 //! @param param1 first parameter
-//! @param param2 second parameter
-function_2(param1, param2) { }
+//! @param[in] param2 second parameter
+//! @param[in] param3 third parameter
+////////////////////////////////////////////////////////////////////////////////////////////////////!
+function_2a(param1, param2, param3) { }
+
+
+
+
+
+ //! @fn function_2b(param1, param2, param3)
+ //! @brief 2nd function
+ //! @param param1 first parameter
+ //! @param[in] param2 second parameter
+ //! @param[in] param3 third parameter
+ ////////////////////////////////////////////////////////////////////////////////////////////////////!
+function_2b(param1, param2, param3) { }
+
+
+
+
+
+//! @fn function_3(param1, param2, param3, param4, param4)
+//! 
+//! @brief 2nd function
+//! 
+//! @param[in] param1 first parameter
+//! @param[out] param2 second parameter
+//! @param[in] param3 third parameter
+//! @param[out] param4 fourth parameter
+//! @param[in,out] param4 fifth parameter
+//! 
+//! @returns Values out to user
+//! 
+//! @retval 1 Return value of 1
+//! @retval 2 Return value of 2
+////////////////////////////////////////////////////////////////////////////////////////////////////!
+function_3(param1, param2, param3, param4, param4) { }
+
+
 
 
 

@@ -21,6 +21,10 @@
 
 /## \+@fn/{
     :step
+    # We need to prune excess white space before proceeding as sed commands that follow presume only 
+    # one space of separation between components
+    s/  \+/ /g
+    # Process "##...@param ..." commands:
     /@param [^ ]\+ .*$/{
         # Groups are
         # \1: @fn <funcname>

@@ -1,12 +1,17 @@
 #!/bin/bash
-# -*- tab-width: 4; encoding: utf-8 -*-
-#
-## @file
-## @author Damien Nadé <bash-argsparse@livna.org>
-## @brief Bash Doxgen Unit Test
-## @copyright WTFPLv2
-## @version 1
-##
+####################################################################################################
+##  @file
+##  
+##  @brief          Bash Doxgen Unit Test
+##  
+##  @note           -*- tab-width: 4; encoding: utf-8 -*-
+## 
+##  @author         Damien Nadé <bash-argsparse@livna.org>
+## 
+##  @copyright      WTFPLv2
+##  
+##  @version        1
+####################################################################################################
 
 declare -r readonly
 declare -r assigned_readonly=readonly-value
@@ -37,21 +42,61 @@ declare -u assigned_uppercase=U
 export exported
 export assigned_exported=1
 
+####################################################################################################
 ## @fn function_1()
 ## @brief 1st function
 ## @param param1 first parameter
 ##
 ## Don't skip empty line above
+####################################################################################################
 function_1() {
-	bogus
-	bogus2;
+    bogus
+    bogus2;
 }
 
-## @fn function_2()
+####################################################################################################
+## @fn function_2a()
 ## @brief 2nd function
 ## @param param1 first parameter
-## @param param2 second parameter
-function function_2() {
-	bogus
-	bogus2;
+## @param[in] param2 second parameter
+## @param[in] param3 third parameter
+####################################################################################################
+function function_2a() {
+    bogus
+    bogus2;
 }
+
+    ####################################################################################################
+    ## @fn function_2b()
+    ## @brief 2nd function
+    ## @param param1 first parameter
+    ## @param[in] param2 second parameter
+    ## @param[in] param3 third parameter
+    ####################################################################################################
+    function function_2b() {
+        bogus
+        bogus2;
+    }
+
+####################################################################################################
+## @fn function_3()
+## 
+##  @brief          2nd function
+##  
+##  @param[in]      param1              first parameter
+##  @param[out]     param2              second parameter
+##  @param[in]      param3              third parameter
+##  @param[out]     param4              fourth parameter
+##  @param[in,out]  param4              fifth parameter
+##  
+##  @returns        Values out to user
+##  
+##  @retval         1                   Return value of 1
+##  @retval         2                   Return value of 2
+####################################################################################################
+function function_3() {
+    bogus
+    bogus2;
+}
+
+
